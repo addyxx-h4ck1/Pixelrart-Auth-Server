@@ -8,12 +8,13 @@ const signInRoute = require('./routes/auth-signin')
 const resetPasswordRoute = require('./routes/auth-reset-pwd')
 const sendPwdChangeLink = require('./routes/auth-confirm-pwd-reset')
 const changePassword = require('./routes/change-password')
-//middleware
-server.use(cors())
-server.use(express.json())
 
 //port
 const port = process.env.PORT || 3001
+
+//middleware
+server.use(cors())
+server.use(express.json())
 
 //routes
 server.use('/api/signup', signUpRoute)

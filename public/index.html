@@ -70,15 +70,24 @@
         const d = Object.fromEntries(f.entries())
 
         async function sendData() {
-          const req = await fetch('/api/change-pwd', {
-            method: 'POST',
-            body: JSON.stringify(d),
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          const res = await req.json()
+          try {
+            const req = await fetch('/api/change-pwd', {
+              method: 'POST',
+              body: JSON.stringify(d),
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            const res = await req.json()
+            showWarningBox('success')
+            window.location.replace(
+              'https://main--photoapptest.netlify.app/auth/signin'
+            )
+          } catch (error) {
+            showWarningBox('Ooops! please try again or contact support')
+            throw error
+          }
         }
         sendData()
       })

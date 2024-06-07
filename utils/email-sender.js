@@ -76,7 +76,7 @@ const sendResetLink = async (token) => {
           follow the instructions provided by clicking the link below: Please note the the link will expire after 3 minutes.
         </p>
         <p>
-          <a href="http:localhost:3001/api/reset-password/${token}"
+          <a href="https://auth-copiq6djm4es73a4js7g.onrender.com/api/reset-password/${token}"
             ><button
               style="
                 padding: 20px 20px;
