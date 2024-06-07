@@ -8,8 +8,18 @@
   <body>
     <form>
       <h1>Change Password</h1>
-      <input type="password" placeholder="Create new password" />
-      <input type="text" placeholder="Create password" />
+      <input
+        type="password"
+        id="newPasssword"
+        name="newPasssword"
+        placeholder="Create new password"
+      />
+      <input
+        type="text"
+        id="confirmPassword"
+        name="confirmPassword"
+        placeholder="Confirm password"
+      />
       <button type="submit">Submit</button>
       <div
         style="
@@ -19,6 +29,8 @@
           text-align: center;
         "
       >
+        <div class="warning-box"></div>
+
         &copy;
         <script>
           document.write(new Date().getFullYear())
@@ -28,7 +40,48 @@
       </div>
     </form>
     <script>
-      console.log('hello world')
+      let resetToken = window.location.href.toString()
+      const replace = resetToken.slice(0, resetToken.lastIndexOf('/') + 1)
+      //auth token
+      let token = resetToken.replace(replace, '')
+
+      //show warning
+      const showWarningBox = (text) => {
+        const box = document.querySelector('.warning-box')
+        box.style.display = 'flex'
+        box.innerHTML = `${text}`
+        setTimeout(() => {
+          box.innerHTML = ''
+          box.style.display = 'none'
+        }, 3000)
+      }
+
+      const form = document.querySelector('form')
+      let password = document.getElementById('newPasssword')
+      let confirmPassword = document.getElementById('confirmPassword')
+      //send form
+      form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        if (password.value === '' || confirmPassword.value === '')
+          return showWarningBox('Please fill in all fields')
+        if (password.value !== confirmPassword.value)
+          return showWarningBox("Passwords don't match")
+        const f = new FormData(e.target)
+        const d = Object.fromEntries(f.entries())
+
+        async function sendData() {
+          const req = await fetch('/api/change-pwd', {
+            method: 'POST',
+            body: JSON.stringify(d),
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          const res = await req.json()
+        }
+        sendData()
+      })
     </script>
   </body>
 </html>
@@ -41,6 +94,20 @@
     justify-content: center;
     align-items: center;
     padding: 1rem;
+  }
+  .warning-box {
+    padding: 0.5rem;
+    border: 2px solid #b03434;
+    margin-bottom: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    color: aqua;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 10px;
+    display: none;
   }
   form {
     width: 30%;
@@ -76,7 +143,6 @@
   }
   button {
     padding: 17px 20px;
-    margin-bottom: 1rem;
     border-radius: 10px;
     width: 100%;
     background-color: rgb(54, 102, 247);

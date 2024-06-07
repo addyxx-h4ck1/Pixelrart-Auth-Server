@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const { resetPassword } = require('../controllers/handle-reset-pwd')
+const { sendChangePwdForm } = require('../controllers/handle-change-pwd')
+const { verifyChangePwdToken } = require('../middleware/handle-reset-pwd')
 
-router.get('/:reset_token', resetPassword)
+router.get('/:token', verifyChangePwdToken, sendChangePwdForm)
 
 module.exports = router
