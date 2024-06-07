@@ -2,7 +2,7 @@ require('dotenv').config()
 const { google } = require('googleapis')
 const nodemailer = require('nodemailer')
 
-const sendResetLink = async (token) => {
+const sendResetLink = async (token, email) => {
   //google auth
   const oAuth2Client = new google.auth.OAuth2(
     process.env.CLIENT_ID,
@@ -28,7 +28,7 @@ const sendResetLink = async (token) => {
 
     const mailOptions = {
       from: `PixelRart Team <no-reply@gmail.com>`,
-      to: 'briannjosh23@gmail.com',
+      to: `${email}`,
       subject: `Reset Password Request`,
       text: `Ooops! This service only supports html email. Cannot change your password, please contact support for assistance. Best regards, PixelRart`,
       html: `<!DOCTYPE html>

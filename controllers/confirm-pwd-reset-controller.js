@@ -14,8 +14,8 @@ const sendPwdResetLink = async (req, res) => {
   const resetToken = await resetPwdToken(existUser._id.toString())
   //send mail
   try {
-    const result = await sendResetLink(resetToken)
-    res.status(201).json('link has been sent to email')
+    const result = await sendResetLink(resetToken, email)
+    res.status(201).json(`link has been sent to ${email}`)
   } catch (error) {
     console.log(error)
     res.status(500).json('there was an error please try again')
