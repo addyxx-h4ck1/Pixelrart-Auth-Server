@@ -4,9 +4,9 @@ const User = require('../models/user-model')
 
 const handleSignup = async (req, res) => {
   //destructure the req body
-  const { userName, brandName, email, pwd } = req.body
+  const { userName, email, pwd } = req.body
   //check for missing (send 400 if any )
-  if (!userName || !brandName || !email || !pwd) return res.sendStatus(400)
+  if (!userName || !email || !pwd) return res.sendStatus(400)
   //check if user || email exist (send send a conflict if they do)
   const existUser = await User.findOne({ userName: userName })
   if (existUser)
@@ -20,7 +20,7 @@ const handleSignup = async (req, res) => {
 
   try {
     const createdUser = await User.create(req.body)
-    return res.status(201).json(createdUser)
+    return res.status(201).json('user created successfully')
   } catch (error) {
     console.log(error)
     return res.sendStatus(500)
