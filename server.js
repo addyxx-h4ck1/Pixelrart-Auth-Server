@@ -8,6 +8,7 @@ const signInRoute = require('./routes/auth-signin')
 const resetPasswordRoute = require('./routes/auth-reset-pwd')
 const sendPwdChangeLink = require('./routes/auth-confirm-pwd-reset')
 const changePassword = require('./routes/change-password')
+const googleAuthLoginRoute = require('./routes/google-auth')
 
 //port
 const port = process.env.PORT || 3001
@@ -19,6 +20,7 @@ server.use(express.json())
 //routes
 server.use('/api/signup', signUpRoute)
 server.use('/api/signin', signInRoute)
+server.use('/auth/google', googleAuthLoginRoute)
 server.use('/auth/sendmail', sendPwdChangeLink)
 server.use('/api/reset-password', resetPasswordRoute)
 server.use('/api/change-pwd', changePassword)
